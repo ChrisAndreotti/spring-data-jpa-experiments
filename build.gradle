@@ -1,0 +1,47 @@
+buildscript {
+    ext {
+        springBootStarterVersion = '2.1.0.RELEASE'
+    }
+    repositories {
+        jcenter()
+        maven {
+            url 'https://plugins.gradle.org/m2/'
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootStarterVersion}")
+        classpath 'mysql:mysql-connector-java:8.0.14'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '2.1.7.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id "org.flywaydb.flyway" version "5.2.1"
+    id 'java'
+}
+
+group = 'com.candreotti.demo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation('mysql:mysql-connector-java:8.0.14')
+    implementation('org.flywaydb:flyway-core')
+    compileOnly('org.projectlombok:lombok:1.18.6')
+    annotationProcessor('org.projectlombok:lombok:1.18.6')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+flyway {
+    user = 'demouser'
+    password = 'demopassword'
+    url = 'jdbc:mysql://localhost:3306/mydb'
+    locations = ["filesystem:migrations/"]
+}
