@@ -1,17 +1,23 @@
-# starter-spring-jpa-mysql
+# spring-data-jpa-experiments
 
-Dockerized starter project for running Spring JPA on MySQL
+Experiments learning Spring Data JPA, with dockerized MySQL database.
 
-## Building and running the app 
 
-Build the starter app by running: 
 
-`./gradlew clean build`
+### Available scripts 
 
-To start up your local development environment, run:
+To start up the local MySQL docker container, run:
 
 `docker-compose up`
 
-Run the data migrations in the /migrations folder of the project to create the database entities:
+Build the starter app and execute tests by running: 
 
-`./gradlew flywayMigrate`
+`./gradlew clean test`
+
+When it is running, you can connect to the database with the following:
+```
+Database=mydb
+Username=demouser
+Password=demopassword
+Port=3306
+```

@@ -25,6 +25,8 @@ group = 'com.candreotti.demo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+ext['junit-jupiter.version'] = '5.5.1'
+
 repositories {
     mavenCentral()
 }
@@ -36,7 +38,12 @@ dependencies {
     implementation('org.flywaydb:flyway-core')
     compileOnly('org.projectlombok:lombok:1.18.6')
     annotationProcessor('org.projectlombok:lombok:1.18.6')
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'junit', module: 'junit'
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.4.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
 }
 
 flyway {
@@ -44,4 +51,11 @@ flyway {
     password = 'demopassword'
     url = 'jdbc:mysql://localhost:3306/mydb'
     locations = ["filesystem:migrations/"]
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed", "standardOut", "standardError"
+    }
 }
